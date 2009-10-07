@@ -1,3 +1,4 @@
 .DS_Store
 target/classes/
 target/logparser-0.1.jar
+.autosession.vim
