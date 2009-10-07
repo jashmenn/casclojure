@@ -1,0 +1,29 @@
+Clojure + Cascading on Hadoop Example
+=====================================
+
+Originally by [Gavin McGovern](http://www.machinelake.com/2009/07/02/cascadings-logparser-example-in-clojure/)
+
+Usage
+=====
+
+You need to have the following environment variables set:
+
+    HADOOP_HOME
+    HADOOP_VERSION
+    CASCADING_HOME
+    CLOJURE_HOME
+    JGRAPHT_HOME
+
+Note: It looks for `clojure-contrib.jar` in `$CLOJURE_HOME/clojure-contrib.jar`
+by default. There are also a few hard-coded jar versions in build.xml.
+Suggestions for improvement are welcome.
+
+After the variables are set:
+
+    ant
+    hadoop jar ./target/logparser-0.1.jar data/apache.200.txt output
+
+Authors
+=======
+Originally by [Gavin McGovern](http://www.machinelake.com/2009/07/02/cascadings-logparser-example-in-clojure/)
+Updated by [Nate Murray](http://www.xcombinator.com)
