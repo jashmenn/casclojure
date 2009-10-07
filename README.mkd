@@ -25,5 +25,6 @@ After the variables are set:
 
 Authors
 =======
-Originally by [Gavin McGovern](http://www.machinelake.com/2009/07/02/cascadings-logparser-example-in-clojure/)
-Updated by [Nate Murray](http://www.xcombinator.com)
+
+* Originally by [Gavin McGovern](http://www.machinelake.com/2009/07/02/cascadings-logparser-example-in-clojure/)
+* Updated by [Nate Murray](http://www.xcombinator.com)
