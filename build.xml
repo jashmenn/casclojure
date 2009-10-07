@@ -1,22 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+You need to have the following environment variables set:
+
+HADOOP_HOME
+HADOOP_VERSION
+CASCADING_HOME
+CLOJURE_HOME
+
+Note: It looks for clojure-contrib.jar in CLOJURE_HOME/clojure-contrib.jar by default 
+
+-->
+
 
 <project name="logparser" default="jar-with-manifest" basedir=".">
 
   <property file="build.properties" />
+  <property environment="env"/>
 
   <property name="module.name" value="logparser"/>
   <property name="module.version" value="0.1"/>
 
-  <property name="cascading.jar" value="/home/gavin/javalib/cascading-1.0.10.jar"/>
-  <property name="jgraph.jar" value="/home/gavin/javalib/jgrapht-jdk1.6.jar"/>
+  <property name="jar.repo" value="/Users/nmurray/programming/java/lib"/> <!-- todo -->
 
-  <property name="hadoop.jar" value="/home/gavin/javalib/hadoop-0.18.3-core.jar"/>
+  <property name="cascading.home" location="${env.CASCADING_HOME}"/>
+  <property name="cascading.version" value="1.0.16"/>
+  <property name="hadoop.home" value="${env.HADOOP_HOME}"/>
+  <property name="hadoop.version" value="${env.HADOOP_VERSION}"/>
+  <property name="clojure.home" value="${env.CLOJURE_HOME}"/>
+  <property name="clojure.version" value="1.0.0"/>
 
-  <property name="clojure.jar" value="/home/gavin/javalib/clojure-1.0.0.jar"/>
-  <property name="clojure-contrib.jar" value="/home/gavin/javalib/clojure-contrib.jar"/>
+  <property name="cascading.jar" value="${cascading.home}/cascading-${cascading.version}.jar"/>
+  <property name="jgraph.jar" value="${jar.repo}/jgrapht-jdk1.6.jar"/>
+  <property name="hadoop.jar" value="${hadoop.home}/hadoop-${hadoop.version}-core.jar"/>
+  <property name="log4j.jar" value="${hadoop.home}/lib/log4j-1.2.15.jar"/>
+  <property name="clojure.jar" value="${clojure.home}/clojure-${clojure.version}.jar"/>
+  <property name="clojure-contrib.jar" value="${clojure.home}/clojure-contrib.jar"/>
   
-  <property name="jar.repo" value="/home/gavin/javalib"/>
-
   <property name="source.dir" value="${basedir}/src"/>
   <property name="target.dir" value="${basedir}/target"/>
   <property name="classes.dir" value="${target.dir}/classes"/>
@@ -30,7 +49,7 @@
     <path location="${cascading.jar}" />
     <path location="${jgraph.jar}" />
     <path location="${source.dir}/clj" />
-    <path location="${jar.repo}/log4j-1.2.15.jar" />
+    <path location="${log4j.jar}" />
     <path location="${classes.dir}" />
   </path>
 
@@ -63,7 +82,7 @@
       <zipfileset src="${hadoop.jar}" />
       <zipfileset src="${cascading.jar}" />
       <zipfileset src="${jgraph.jar}" />
-      <zipfileset src="${jar.repo}/log4j-1.2.15.jar" />
+      <zipfileset src="${log4j.jar}" />
     </jar>
   </target>
 
