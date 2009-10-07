@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="logparser" default="jar-with-manifest" basedir=".">
+
+  <property file="build.properties" />
+
+  <property name="module.name" value="logparser"/>
+  <property name="module.version" value="0.1"/>
+
+  <property name="cascading.jar" value="/home/gavin/javalib/cascading-1.0.10.jar"/>
+  <property name="jgraph.jar" value="/home/gavin/javalib/jgrapht-jdk1.6.jar"/>
+
+  <property name="hadoop.jar" value="/home/gavin/javalib/hadoop-0.18.3-core.jar"/>
+
+  <property name="clojure.jar" value="/home/gavin/javalib/clojure-1.0.0.jar"/>
+  <property name="clojure-contrib.jar" value="/home/gavin/javalib/clojure-contrib.jar"/>
+  
+  <property name="jar.repo" value="/home/gavin/javalib"/>
+
+  <property name="source.dir" value="${basedir}/src"/>
+  <property name="target.dir" value="${basedir}/target"/>
+  <property name="classes.dir" value="${target.dir}/classes"/>
+
+  <property name="jar.file.name" value="${module.name}-${module.version}.jar"/>
+
+  <path id="classpath">
+    <path location="${clojure.jar}" />
+    <path location="${clojure-contrib.jar}" />
+    <path location="${hadoop.jar}" />
+    <path location="${cascading.jar}" />
+    <path location="${jgraph.jar}" />
+    <path location="${source.dir}/clj" />
+    <path location="${jar.repo}/log4j-1.2.15.jar" />
+    <path location="${classes.dir}" />
+  </path>
+
+  <target name="compile" description="Run the Clojure Compiler">
+    <property name="cpath" refid="classpath" />
+    <echo message="cpath=${cpath}" />
+    <mkdir dir="${classes.dir}"/>
+    <java classname="clojure.lang.Compile" fork="true">
+      <sysproperty key="clojure.compile.path" value="${classes.dir}" />
+      <classpath refid="classpath" />
+      <arg value="logparser.app" />
+    </java>
+  </target>
+
+  <target name="jar" depends="compile" description="Build the JAR">
+    <jar jarfile="${target.dir}/${jar.file.name}">
+      <fileset dir="${classes.dir}" includes="**/*.class"/>
+    </jar>
+  </target>
+
+  <target name="jar-with-manifest" depends="compile" description="Build the JAR">
+    <manifest file="${target.dir}/MANIFEST.MF">
+      <attribute name="Built-By" value="${user.name}" />
+      <attribute name="Main-Class" value="logparser.app" />
+    </manifest>
+    <jar jarfile="${target.dir}/${jar.file.name}" manifest="${target.dir}/MANIFEST.MF">
+      <fileset dir="${classes.dir}" includes="**/*.class"/>
+      <zipfileset src="${clojure.jar}" />
+      <zipfileset src="${clojure-contrib.jar}" />
+      <zipfileset src="${hadoop.jar}" />
+      <zipfileset src="${cascading.jar}" />
+      <zipfileset src="${jgraph.jar}" />
+      <zipfileset src="${jar.repo}/log4j-1.2.15.jar" />
+    </jar>
+  </target>
+
+  <target name="clean" description="Clean the output directory">
+    <delete dir="${target.dir}"/>
+  </target>
+
+</project>
